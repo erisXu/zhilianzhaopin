@@ -1,4 +1,4 @@
-#Using google apps script
+//Run in google apps script, data will be out put to a spreadsheet
 function renderTableau(){
   renderByKeyword("tableau");
 }
@@ -11,7 +11,7 @@ function renderPowerBI(){
 function renderByKeyword(keyword){
    var today = makeTodayString();
    var sheetName = today + "_" + keyword;
-   var sp = SpreadsheetApp.openById("1U4BuxiJsj2f4JW5Zcy23lcnwHUiKjjd5bEzx4dMxI3U");
+   var sp = SpreadsheetApp.openById("YourSpreadS");
    var sheet = sp.getSheetByName(sheetName) || sp.insertSheet(sheetName);
     //clear once
    sheet.clear();
@@ -48,7 +48,7 @@ function renderByKeyword(keyword){
 *@keyword{string} : keyword
 */
 function getResultArray(i,cityId,keyword){
-     Utilities.sleep(2000);  //2秒间隔
+     Utilities.sleep(2000);  //sleep for 2 seconds
      var response = JSON.parse(UrlFetchApp.fetch(createKeywordSearchParams(i*90,cityId,keyword,-1)));
      //stop if there is an error
      if(response["code"] != 200){
@@ -73,32 +73,6 @@ function getResultArray(i,cityId,keyword){
     }
     return values;
 }
-
-
-/*
-*return {array} : ready for rendering array containing company information
-*@response {object} : response object from url fetch
-*/
-//function getCompanyInformationFromResponseList(response){
-//  var result = response["data"]["results"];
-//   //sometimes rank_offset becomes undefined, so instead make rank directly
-//  if(result){
-//    var values =  result.map(function(job){
-//      return properties.map(function(prop){
-//        if(prop.match(/\./)){
-//          var subprops = prop.split(".");
-//          return subprops.reduce(function(accumulator, currentValue) {
-//            return accumulator[currentValue];
-//          }, job);
-//        }else{
-//          return job[prop];
-//        }
-//      })
-//    });
-//  }
-//  return values;
-//}
-
 
 
 
